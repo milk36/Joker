@@ -1,0 +1,10 @@
+package protocol;
+
+option java_package = "com.protocol.S2C";
+option java_outer_classname = "S2CProtos";
+
+//////////////////S-C/////////////////////////////
+// –≠“È∫≈:101
+message S2CSayHello {
+	required string msg = 1;
+}

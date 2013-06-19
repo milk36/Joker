@@ -1,0 +1,15 @@
+// See README.txt for information and build instructions.
+
+package protocol;
+
+option java_package = "com.protocol.C2S";
+option java_outer_classname = "C2SProtos";
+
+/////////////// C-S////////////////////
+// –≠“È∫≈:1
+message C2SChat {
+  required string name = 1;
+  optional string message = 2;
+
+}
+

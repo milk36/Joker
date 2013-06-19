@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="src" path="src/protocolBuffer"/>
+	<classpathentry kind="src" path="src/main/java/commons"/>
+	<classpathentry kind="src" path="src/main/java/engine"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="lib/bonecp-0.7.1.RELEASE.jar" sourcepath="E:/milk/.m2/repository/com/jolbox/bonecp/0.7.1.RELEASE/bonecp-0.7.1.RELEASE-sources.jar"/>
+	<classpathentry kind="lib" path="lib/commons-configuration-1.6.jar" sourcepath="E:/milk/.m2/repository/commons-configuration/commons-configuration/1.6/commons-configuration-1.6-sources.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.5-bin.jar"/>
+	<classpathentry kind="lib" path="lib/guava-14.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.7.5.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.7.5.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-beanutils-1.8.0.jar" sourcepath="E:/milk/.m2/repository/commons-beanutils/commons-beanutils/1.8.0/commons-beanutils-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="lib/netty-3.2.7.Final.jar" sourcepath="E:/milk/.m2/repository/org/jboss/netty/netty/3.2.7.Final/netty-3.2.7.Final-sources.jar"/>
+	<classpathentry kind="lib" path="lib/protobuf.jar"/>
+	<classpathentry kind="lib" path="lib/groovy-all-2.0.5.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
