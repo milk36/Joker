@@ -16,8 +16,8 @@
 	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.0.4.jar"/>
 	<classpathentry kind="lib" path="lib/commons-beanutils-1.8.0.jar" sourcepath="E:/milk/.m2/repository/commons-beanutils/commons-beanutils/1.8.0/commons-beanutils-1.8.0-sources.jar"/>
-	<classpathentry kind="lib" path="lib/netty-3.2.7.Final.jar" sourcepath="E:/milk/.m2/repository/org/jboss/netty/netty/3.2.7.Final/netty-3.2.7.Final-sources.jar"/>
 	<classpathentry kind="lib" path="lib/protobuf.jar"/>
 	<classpathentry kind="lib" path="lib/groovy-all-2.0.5.jar"/>
+	<classpathentry kind="lib" path="lib/netty-all-4.0.4.Final.jar" sourcepath="E:/milk/.m2/repository/io/netty/netty-all/4.0.4.Final/netty-all-4.0.4.Final-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

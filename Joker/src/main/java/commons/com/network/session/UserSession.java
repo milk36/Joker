@@ -1,10 +1,10 @@
 package com.network.session;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelFuture;
-import org.jboss.netty.channel.ChannelFutureListener;
-import org.jboss.netty.channel.Channels;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+
 
 public class UserSession {
 
@@ -31,10 +31,10 @@ public class UserSession {
 		this.channel = null;
 	}
 
-	public void write(ChannelBuffer buff, boolean isClose) {
+	public void write(ByteBuf buff, boolean isClose) {
 		if (channel == null)
 			return;
-		ChannelFuture future = Channels.write(channel, buff);
+		ChannelFuture future = channel.writeAndFlush(buff);
 		if (isClose)
 			future.addListener(ChannelFutureListener.CLOSE);// 添加关闭监听
 	}

@@ -1,25 +1,26 @@
 package com.network.protocol;
 
-import static org.jboss.netty.buffer.ChannelBuffers.buffer;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.Channel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-
-import org.jboss.netty.buffer.ChannelBuffer;
 
 import com.network.session.SessionManager;
 import com.network.session.UserSession;
 
 public abstract class GameServerPacket {
 
-	protected int channelId;
+	protected Channel channel;
 	protected byte[] bytes;
 	protected ByteArrayOutputStream bos;
 	protected DataOutputStream os;
 
-	public GameServerPacket(int channelId) {
-		this.channelId = channelId;
+	public GameServerPacket(Channel channel) {
+		this.channel = channel;
 	}
 
 	/**
@@ -52,10 +53,11 @@ public abstract class GameServerPacket {
 	 */
 	private void flush() throws IOException {
 		os.flush();
-		UserSession session = SessionManager.getUserSessionForChannelId(channelId);
+		UserSession session = SessionManager.getUserSessionForChannelId(channel);
 		if (session != null) {
-			ChannelBuffer buf = buffer(bytes.length + 2);
-			buf.writeShort(bytes.length);
+			// ByteBuf buf = Unpooled.buffer(bytes.length + 2);
+			// buf.writeShort(bytes.length);
+			ByteBuf buf = Unpooled.buffer(bytes.length);
 			buf.writeBytes(bytes);
 			session.write(buf, false);
 		}

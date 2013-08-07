@@ -1,21 +1,23 @@
 package com.network.session;
 
+import io.netty.channel.Channel;
+
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SessionManager {
-	private static ConcurrentHashMap<Integer, UserSession> channelMap = new ConcurrentHashMap<Integer, UserSession>();
+	private static ConcurrentHashMap<Channel, UserSession> channelMap = new ConcurrentHashMap<Channel, UserSession>();
 
-	public static UserSession getUserSessionForChannelId(int channelId) {
-		return channelMap.get(channelId);
+	public static UserSession getUserSessionForChannelId(Channel channel) {
+		return channelMap.get(channel);
 	}
 
 	public static void putUserSessionForChannelMap(UserSession session) {
-		channelMap.put(session.getChannel().getId(), session);
+		channelMap.put(session.getChannel(), session);
 	}
 
-	public static UserSession removeChannelMap(int channelId) {
-		return channelMap.remove(channelId);
+	public static UserSession removeChannelMap(Channel channel) {
+		return channelMap.remove(channel);
 	}
 
 	/**
@@ -24,7 +26,7 @@ public class SessionManager {
 	 * @Description: 获取当前所有channelId
 	 * @return Set<Integer>
 	 */
-	public static Set<Integer> getAllChannelId() {
+	public static Set<Channel> getAllChannel() {
 		return channelMap.keySet();
 	}
 }

@@ -1,20 +1,19 @@
 package com.testnetwork;
 
-import static org.jboss.netty.buffer.ChannelBuffers.buffer;
+
+import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-import java.net.InetSocketAddress;
-import java.util.concurrent.Executors;
-
-import org.jboss.netty.bootstrap.ClientBootstrap;
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelFuture;
-import org.jboss.netty.channel.Channels;
-import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 
 import com.protocol.C2S.C2SProtos.C2SChat;
 
@@ -29,21 +28,23 @@ public class TestTelnetChat {
 		// Parse options.
 		String host = "192.168.1.104";
 		int port = 12345;
-
+		EventLoopGroup group = new NioEventLoopGroup();
 		// Configure the client.
-		ClientBootstrap bootstrap = new ClientBootstrap(new NioClientSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool()));
+		Bootstrap bootstrap = new Bootstrap();
 
 		// Configure the pipeline factory.
-		bootstrap.setPipelineFactory(new TelnetClientPipelineFactory());
+		// bootstrap.setPipelineFactory(new TelnetClientPipelineFactory());
 
 		// Start the connection attempt.
-		ChannelFuture future = bootstrap.connect(new InetSocketAddress(host, port));
-
+		// ChannelFuture future = bootstrap.connect(new InetSocketAddress(host,
+		// port));
+		bootstrap.group(group).channel(NioSocketChannel.class).handler(new TelnetClientPipelineFactory());
+		ChannelFuture future = bootstrap.connect(host, port);
 		// Wait until the connection attempt succeeds or fails.
-		Channel channel = future.awaitUninterruptibly().getChannel();
+		Channel channel = future.awaitUninterruptibly().channel();
 		if (!future.isSuccess()) {
-			future.getCause().printStackTrace();
-			bootstrap.releaseExternalResources();
+			future.cause().printStackTrace();
+			group.shutdownGracefully();
 			return;
 		}
 
@@ -69,10 +70,10 @@ public class TestTelnetChat {
 			byte[] buff = bos.toByteArray();
 			os.flush();
 
-			ChannelBuffer buf = buffer(buff.length + 2);
+			ByteBuf buf = Unpooled.buffer(buff.length + 2);
 			buf.writeShort(buff.length);
 			buf.writeBytes(buff);
-			lastWriteFuture = Channels.write(channel, buf);// 发送到服务器
+			lastWriteFuture = channel.writeAndFlush(buf);// 发送到服务器
 
 			// Sends the received line to the server.
 			// lastWriteFuture = channel.write(line + "\r\n");
@@ -80,7 +81,7 @@ public class TestTelnetChat {
 			// If user typed the 'bye' command, wait until the server closes
 			// the connection.
 			if (line.toLowerCase().equals("bye")) {
-				channel.getCloseFuture().awaitUninterruptibly();
+				channel.closeFuture().sync();
 				break;
 			}
 		}
@@ -95,6 +96,6 @@ public class TestTelnetChat {
 		channel.close().awaitUninterruptibly();
 
 		// Shut down all thread pools to exit.
-		bootstrap.releaseExternalResources();
+		group.shutdownGracefully();
 	}
 }

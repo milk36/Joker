@@ -1,11 +1,11 @@
 package com.network;
 
 
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.LengthFieldPrepender;
+
 import org.apache.log4j.Logger;
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.handler.codec.frame.LengthFieldPrepender;
 
 /**
  * 
@@ -28,14 +28,22 @@ public class ProtocolEncoder extends LengthFieldPrepender {
 		// TODO Auto-generated constructor stub
 	}
 
+	// @Override
+	// protected Object encode(ChannelHandlerContext ctx, Channel channel,
+	// Object msg) throws Exception {
+	// ChannelBuffer buffer = (ChannelBuffer) msg;
+	// int len = buffer.writerIndex() - 2;
+	// log.info("send length:" + len);
+	// buffer.setShort(0, len);
+	// return buffer;
+	//
+	// }
 	@Override
-	protected Object encode(ChannelHandlerContext ctx, Channel channel, Object msg) throws Exception {
-		ChannelBuffer buffer = (ChannelBuffer) msg;
-		int len = buffer.writerIndex() - 2;
-		log.info("send length:" + len);
-		buffer.setShort(0, len);
-		return buffer;
-		
+	protected void encode(ChannelHandlerContext ctx, ByteBuf msg, ByteBuf out) throws Exception {
+		// int len = msg.writerIndex() - 2;
+		// log.info("send length:" + len);
+		// msg.setShort(0, len);
+		super.encode(ctx, msg, out);
 	}
 }
 

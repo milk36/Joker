@@ -1,11 +1,13 @@
 package com.main;
 
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+
 import java.net.InetSocketAddress;
-import java.util.concurrent.Executors;
 
 import org.apache.log4j.Logger;
-import org.jboss.netty.bootstrap.ServerBootstrap;
-import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
 import com.config.Config;
 import com.network.ServerPipelineFactory;
@@ -22,8 +24,11 @@ public class MainServer {
 		Config.init();
 		GameProtocolHandler.init();
 		try {
-			bootstrap = new ServerBootstrap(new NioServerSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool()));
-			bootstrap.setPipelineFactory(new ServerPipelineFactory());
+			EventLoopGroup bossGroup = new NioEventLoopGroup();
+			EventLoopGroup workerGroup = new NioEventLoopGroup();
+			bootstrap = new ServerBootstrap();
+			bootstrap.group(bossGroup, workerGroup);
+			bootstrap.channel(NioServerSocketChannel.class).childHandler(new ServerPipelineFactory());
 			bootstrap.bind(new InetSocketAddress(PORT));// 绑定端口
 			log.info("MainServer listen on " + PORT);
 		} catch (Exception e) {

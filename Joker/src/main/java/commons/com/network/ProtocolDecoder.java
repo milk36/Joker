@@ -1,9 +1,11 @@
 package com.network;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.handler.codec.frame.LengthFieldBasedFrameDecoder;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+
+import java.util.List;
+
 
 /**
  * 
@@ -30,12 +32,24 @@ public class ProtocolDecoder extends LengthFieldBasedFrameDecoder {
 		super(maxFrameLength, lengthFieldOffset, lengthFieldLength, lengthAdjustment, initialBytesToStrip);
 	}
 
+	// @Override
+	// protected Object decode(ChannelHandlerContext arg0, Channel arg1,
+	// ChannelBuffer arg2) throws Exception {
+	// // 协议体 : |协议长度 |协议编号|协议内容|--|short|short|....|
+	// Object obj = super.decode(arg0, arg1, arg2);
+	// return obj;
+	//
+	// }
 	@Override
-	protected Object decode(ChannelHandlerContext arg0, Channel arg1, ChannelBuffer arg2) throws Exception {
-		// 协议体 : |协议长度 |协议编号|协议内容|--|short|short|....|
-		Object obj = super.decode(arg0, arg1, arg2);
-		return obj;
-		
+	protected Object decode(ChannelHandlerContext arg0, ByteBuf arg1) throws Exception {
+		System.out.println("decode");
+		return super.decode(arg0, arg1);
+	}
+
+	@Override
+	protected void decodeLast(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+		System.out.println("decodeLast");
+		super.decodeLast(ctx, in, out);
 	}
 }
 

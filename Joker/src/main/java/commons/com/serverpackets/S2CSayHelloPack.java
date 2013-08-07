@@ -1,5 +1,7 @@
 package com.serverpackets;
 
+import io.netty.channel.Channel;
+
 import java.io.IOException;
 
 import com.network.protocol.GameServerPacket;
@@ -11,8 +13,8 @@ public class S2CSayHelloPack extends GameServerPacket {
 
 	static int opCode = 101;// 协议号
 
-	public S2CSayHelloPack(int channelId, S2CSayHello.Builder protobuf) {
-		super(channelId);
+	public S2CSayHelloPack(Channel channel, S2CSayHello.Builder protobuf) {
+		super(channel);
 		this.protobuf = protobuf;
 	}
 
@@ -22,10 +24,10 @@ public class S2CSayHelloPack extends GameServerPacket {
 		bytes = bos.toByteArray();
 	}
 
-	public static void sendC(int channelId, String msg) {
+	public static void sendC(Channel channel, String msg) {
 		S2CSayHello.Builder build = S2CSayHello.newBuilder();
 		build.setMsg(msg);
-		S2CSayHelloPack obj = new S2CSayHelloPack(channelId, build);
+		S2CSayHelloPack obj = new S2CSayHelloPack(channel, build);
 		obj.send();
 	}
 
