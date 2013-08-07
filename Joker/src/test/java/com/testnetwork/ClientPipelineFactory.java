@@ -21,12 +21,4 @@ public class ClientPipelineFactory extends ChannelInitializer<SocketChannel> {
 
 	}
 
-	// @Override
-	// public ChannelPipeline getPipeline() throws Exception {
-	// ChannelPipeline pipeline = pipeline();
-	//
-	// pipeline.addLast("handler", new ClientHander());
-	// return pipeline;
-	// }
-
 }

@@ -19,52 +19,7 @@ import com.protocol.S2C.S2CProtos.S2CSayHello;
 
 public class ClientHander extends SimpleChannelInboundHandler<byte[]> {
 	static Logger log = Logger.getLogger(ClientHander.class);
-	// @Override
-	// public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)
-	// throws Exception {
-	// // TODO Auto-generated method stub
-	// super.messageReceived(ctx, e);
-	// }
-	//
-	// @Override
-	// public void channelOpen(ChannelHandlerContext ctx, ChannelStateEvent e)
-	// throws Exception {
-	// // TODO Auto-generated method stub
-	// super.channelOpen(ctx, e);
-	// }
-	//
-	// @Override
-	// public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent
-	// e) throws Exception {
-	// ByteArrayOutputStream bos = new ByteArrayOutputStream();
-	// DataOutputStream os = new DataOutputStream(bos);
-	//
-	// // os.writeShort(2);// 写入数据
-	// // os.writeShort(5678);
-	//
-	// // Chat.Builder chatB=Chat.newBuilder();
-	// // chatB.setName("xiaoxiao");
-	// // chatB.setMessage("haohaohao...中文");
-	//
-	// // System.out.println(chatB.build().get);
-	//
-	// // byte[] protoclBytes = chatB.build().toByteArray();
-	// //
-	// // os.flush();
-	//
-	// C2SChat.Builder chat = C2SChat.newBuilder();
-	// chat.setName("milk");
-	// chat.setMessage("hello world...");
-	// os.writeShort(1);
-	// os.write(chat.build().toByteArray());
-	// byte[] buff = bos.toByteArray();
-	// os.flush();
-	//
-	// ChannelBuffer buf = buffer(buff.length + 2);
-	// buf.writeShort(buff.length);
-	// buf.writeBytes(buff);
-	// ChannelFuture future = Channels.write(e.getChannel(), buf);
-	// }
+
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
